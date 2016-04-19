@@ -40,17 +40,61 @@ struct node{
 	struct node *right;
 };
 
+int heightrecursion(struct node *node){
+	if (node->left==NULL&&node->right==NULL){
+		return 1;
+	}
+	else{
+		int leftH = heightrecursion(node ->left);
+		int rightH = heightrecursion(node->right);
+		if (leftH >= rightH){
+			return 1 + leftH;
+		}
+		else{
+			return 1 + rightH;
+		}
+	}
+
+}
+int left_sum(struct node *node){
+	if (node== NULL){
+		return 0;
+	}
+	else{
+		int lsum = left_sum(node->left);
+		int rsum = left_sum(node->right);
+		return node->data+lsum + rsum;
+	}
+}
+int right_sum(struct node *node){
+	if (node == NULL){
+		return 0;
+	}
+	else{
+		int lsum = right_sum(node->left);
+		int rsum = right_sum(node->right);
+		return node->data + lsum + rsum;
+	}
+}
 
 int get_height(struct node *root){
-
-	return 0;
+	if (!root){
+		return -1;
+	}
+	return heightrecursion(root);
 }
 
 int get_left_subtree_sum(struct node *root){
-	return 0;
+	if (!root){
+		return -1;
+	}
+	return left_sum(root->left);
 }
 
 int get_right_subtree_sum(struct node *root){
-	return 0;
+	if (!root){
+		return -1;
+	}
+	return right_sum(root->right);
 }
 

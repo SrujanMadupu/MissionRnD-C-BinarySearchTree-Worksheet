@@ -32,10 +32,44 @@ struct node{
 	int data;
 	struct node *right;
 };
+		
+struct node* addnode(int mid){
 
+	struct node *temp = (struct node*)malloc(sizeof(struct node));
+
+	temp->left = NULL;
+	temp->data = mid;
+	temp->right = NULL;
+
+	return temp;
+}
+struct node* Balanced_BST(int *arr, int start,int end){
+	if (start > end){
+
+		return NULL;
+	}
+	int mid = start + (end - start) / 2;
+
+	struct node *Balanced= addnode(arr[mid]);
+
+	Balanced->left = Balanced_BST(arr, start, mid - 1);
+
+    Balanced->right = Balanced_BST(arr, mid + 1, end);
+
+	return Balanced;
+}
 
 struct node * convert_array_to_bst(int *arr, int len){
-	
-	return NULL;
+
+	if (arr != NULL && len > 0){
+
+		return Balanced_BST(arr, 0,len-1);
+
+	}
+	else{
+
+		return NULL;
+
+	}
 }
 

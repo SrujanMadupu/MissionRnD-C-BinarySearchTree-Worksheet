@@ -38,8 +38,21 @@ struct node{
   int data;
   struct node *right;
 };
+int IsLeaf(struct node *node){
+	if (node->left == NULL && node->right == NULL){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
 
 int get_closest_leaf_distance(struct node *root, struct node *temp)
 {
-  return -1;
+	if (!root || !temp){
+		return -1;
+	}
+	if (IsLeaf(temp)){
+		return 0;
+	}
 }

@@ -28,10 +28,48 @@ struct node{
 	int data;
 	struct node *right;
 };
-
-
-
-int* BSTRighttoLeftRows(struct node* root)
-{
-    return NULL;
+int TNodes(struct node *root){
+	if (root != NULL){
+		return 1 + TNodes(root->left) + TNodes(root->right);
+	}
+	else{
+		return 0;
+	}
 }
+int enqueue(struct node **Queue, int rear, struct node *root){
+	Queue[rear] = (struct node*)malloc(sizeof(struct node));
+	Queue[rear] = root;
+ 	return rear + 1;
+}
+int dequeue(struct node **Queue, int front, int *result,int i){
+	result[i] = Queue[front]->data;
+	return front + 1;
+}
+int* RighttoLeft(struct node **Queue, int front, int rear, int *result, int i){
+	while (front != rear){
+		if ((Queue[front])->right != NULL){
+			rear = enqueue(Queue, rear, Queue[front]->right);
+		}
+		if ((Queue[front])->left != NULL){
+			rear = enqueue(Queue, rear, Queue[front]->left);
+		}
+		front = dequeue(Queue, front, result, i);
+		i = i + 1 ; 
+	}
+	return result;
+}
+int* BSTRighttoLeftRows(struct node* root)
+{   
+	if (!root){
+		return NULL;
+	}
+	struct node *Queue[100];
+	int numberofnodes = TNodes(root);
+	int *result = (int*)malloc(sizeof(int)*numberofnodes);
+	int front = 0;
+	Queue[0] = (struct node*)malloc(sizeof(struct node));
+	int rear = enqueue(Queue, front , root);
+	int i = 0;
+	return RighttoLeft(Queue, front, rear, result,i);
+}
+
