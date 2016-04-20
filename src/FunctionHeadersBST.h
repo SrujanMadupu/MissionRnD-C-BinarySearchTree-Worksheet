@@ -9,3 +9,4 @@ int get_height(struct node *);
 int get_right_subtree_sum(struct node *root);
 int get_left_subtree_sum(struct node *root);
 int TNodes(struct node *root);
+int get_distance_temp(struct node *root, struct node *temp);
